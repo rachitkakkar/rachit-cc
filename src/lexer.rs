@@ -23,8 +23,8 @@ pub enum TokenType {
 
   Equal(char),
   EqualEqual(String),
-  LessThan(String),
-  GreaterThan(String),
+  LessThan(char),
+  GreaterThan(char),
   LessThanEqual(String),
   GreaterThanEqual(String),
   Plus(char),
@@ -80,7 +80,7 @@ pub fn lex(input: &String) -> Result<Vec<Token>, String>  {
       ',' => tokens.push(Token::new(TokenType::Comma(','), line_num, position)),
       ';' => tokens.push(Token::new(TokenType::Semicolon(';'), line_num, position)),
 
-      // Handle two-character operators (To-do!)
+      // Handle two-character operators z
       '=' => {
         if let Some(next_ch) = it.peek() {
           match next_ch {
@@ -91,8 +91,30 @@ pub fn lex(input: &String) -> Result<Vec<Token>, String>  {
             }
           }
         }
-
+      },
+      '>' => {
+        if let Some(next_ch) = it.peek() {
+          match next_ch {
+            '=' => tokens.push(Token::new(TokenType::GreaterThanEqual(">=".to_string()), line_num, position)),
+            _ => {
+              tokens.push(Token::new(TokenType::GreaterThan('>'), line_num, position));
+              continue;
+            }
+          }
+        }
       }
+      '<' => {
+        if let Some(next_ch) = it.peek() {
+          match next_ch {
+            '=' => tokens.push(Token::new(TokenType::LessThanEqual("==".to_string()), line_num, position)),
+            _ => {
+              tokens.push(Token::new(TokenType::LessThan('<'), line_num, position));
+              continue;
+            }
+          }
+        }
+      },
+
       _ => return Err(format!("Unrecognized character {} at line {}", ch, line_num))
     }
 
