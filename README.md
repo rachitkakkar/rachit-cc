@@ -3,7 +3,7 @@ A toy compiler for a simplified imperative language (SIL) written Rust.
 
 Here is an example of a SIL program that recursively 
 calculates the Fibonacci numbers:
-```
+```python
 # Compute the x'th Fibonacci number.
 def fib(x) {
   if (x < 3) {
@@ -17,6 +17,7 @@ def fib(x) {
 # This expression will compute the 40th number.
 fib(40)
 ```
+*Visualized with Python syntax highlighting for readability*
 
 And here are all the supported keywords in SIL:
 
