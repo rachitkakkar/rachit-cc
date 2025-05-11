@@ -38,4 +38,4 @@ And here are all the supported keywords in SIL:
 ## Sources
 The syntax is loosely inspired by the Decaf language reference used in CS 432 and CS 630 at James Madison University.
 
-"Crafting Interpreters" by Robert Nystrom
+"Crafting Interpreters" by Robert Nystrom https://craftinginterpreters.com/
