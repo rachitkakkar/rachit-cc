@@ -19,8 +19,8 @@ fib(40)
 ```
 
 And here are all the supported keywords in SIL:
-```def if else while return break continue int bool void true```
 
+```def if else while return break continue int bool void true```
 
 ## Planned Features
 - Handwritten table/switch driven lexer (also known as a *scanner* or *tokenizer*) ✅

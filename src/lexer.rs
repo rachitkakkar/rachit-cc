@@ -112,6 +112,16 @@ pub fn lex(input: &String) -> Result<Vec<Token>, String>  {
         }
       },
 
+      // Ignore comments (skip until the end of the line)
+      '#' => {
+        while let Some(ch) = it.next() {
+          if ch == '\n' {
+            line_num += 1;
+            break;
+          }
+        }
+      }
+
       _ => return Err(format!("Unrecognized character {} at line {}", ch, line_num))
     }
 
@@ -139,4 +149,33 @@ mod tests {
     assert_eq!(tokens[4].t_tok, TokenType::CloseCurly('}'));
     assert_eq!(tokens[5].t_tok, TokenType::CloseBracket(']'));
   }
+
+  #[test]
+  fn lex_comments() {
+    // Comment at end of file
+    let mut source: String = "+ \n # This is a comment".to_string();
+    let mut result = lex(&source);
+    assert_eq!(result.is_ok(), true);
+    let mut tokens: Vec<Token> = result.unwrap();
+    assert_eq!(tokens.len(), 1);
+    assert_eq!(tokens[0].t_tok, TokenType::Plus('+'));
+
+    // Comment in the middle of a file
+    source = "+ \n # This is a comment \n +".to_string();
+    result = lex(&source);
+    assert_eq!(result.is_ok(), true);
+    tokens = result.unwrap();
+    assert_eq!(tokens.len(), 2);
+    assert_eq!(tokens[0].t_tok, TokenType::Plus('+'));
+    assert_eq!(tokens[1].t_tok, TokenType::Plus('+'));
+  }
+
+  #[test]
+  fn lex_unrecognized_char() {
+    let source: String = "( + )?".to_string(); // To-do, replace with numbers
+    let result = lex(&source);
+    assert_eq!(result.is_ok(), false);
+  }
+
+
 }

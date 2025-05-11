@@ -16,7 +16,7 @@ fn main() {
   let args: Vec<String> = env::args().collect();
 
   if args.len() < 2 {
-    println!("Please provide a valid RC file")
+    println!("Please provide a valid SIL file")
   } else {
     let file_path: &String = &args[1];
     compile(file_path); // To-do, handle unused `Result`
