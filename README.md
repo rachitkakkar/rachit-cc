@@ -29,7 +29,7 @@ And here are all the supported keywords in SIL:
 - Code generation to ARM assembly
 - Language support for floating point numbers, basic arithmetic operators, mutable variables, function definitions and calls, conditionals, and while loops.
 - Optimizations like trivial constant folding (to-do: flesh out all optimizations)
-- 100% unit test coverage
+- 100% unit test coverage (with GitHub continuous integration) ✅
 
 ## Low-Priority Future Improvements
 - Support for more data types other than floating points (like booleans, integers, and strings)
