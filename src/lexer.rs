@@ -120,8 +120,53 @@ pub fn lex(input: &String) -> Result<Vec<Token>, String>  {
             break;
           }
         }
-      }
+      },
 
+      // Handle keywords (def, if, else, while, etc.)
+      'a'..='z' | 'A'..='Z' => {
+        let mut identifier = ch.to_string();
+        while let Some(next_ch) = it.peek() {
+          if next_ch.is_alphanumeric() || *next_ch == '_' {
+            identifier.push(it.next().unwrap());
+            position += 1;
+          } else {
+            break;
+          }
+        }
+
+        // Check if it's a keyword
+        match identifier.as_str() {
+          "def" => tokens.push(Token::new(TokenType::Def(identifier), line_num, position)),
+          "if" => tokens.push(Token::new(TokenType::If(identifier), line_num, position)),
+          "else" => tokens.push(Token::new(TokenType::Else(identifier), line_num, position)),
+          "while" => tokens.push(Token::new(TokenType::While(identifier), line_num, position)),
+          "return" => tokens.push(Token::new(TokenType::Return(identifier), line_num, position)),
+          "break" => tokens.push(Token::new(TokenType::Break(identifier), line_num, position)),
+          "continue" => tokens.push(Token::new(TokenType::Continue(identifier), line_num, position)),
+          "true" => tokens.push(Token::new(TokenType::True(identifier), line_num, position)),
+          "false" => tokens.push(Token::new(TokenType::False(identifier), line_num, position)),
+          _ => tokens.push(Token::new(TokenType::Identifier(identifier), line_num, position)),
+        }
+      },
+
+      // Handle numbers (floating point or integers)
+      '0'..='9' => {
+        let mut num_str = ch.to_string();
+        while let Some(next_ch) = it.peek() {
+          if next_ch.is_digit(10) || *next_ch == '.' {
+            num_str.push(it.next().unwrap());
+            position += 1;
+          } else {
+            break;
+          }
+        }
+
+        // Convert to number
+        match num_str.parse::<f64>() {
+          Ok(num) => tokens.push(Token::new(TokenType::Number(num), line_num, position)),
+          Err(_) => return Err(format!("Invalid number {} at line {}", num_str, line_num)),
+        }
+      },
       _ => return Err(format!("Unrecognized character {} at line {}", ch, line_num))
     }
 
@@ -130,6 +175,48 @@ pub fn lex(input: &String) -> Result<Vec<Token>, String>  {
 
   return Ok(tokens);
 }
+
+// To-do tests
+// 1. Simple arithmetic -> 4+5*6
+// 2. Test with function definition, function call, and binary operations with precedence -> 
+// def test(x, y) { 
+//   (1+2+x)*(test(x, 2)+(1+2))
+// }
+// def foo(x) {
+//  (1+2+x)*(x+(1+2))
+// }
+//
+// x = foo(1)
+// test(x, 5)
+// 3. If statement, while statement, and top-level statement test
+// def bar(x) {
+//   while (x < 1) {
+//     1 + 5 * bar(1)
+//   }
+// }
+
+// def foo(x) {
+//   if (x<1) { 
+//     foo(1)
+//   }
+//   else {
+//     bar(x)
+//   }
+// }
+// foo(1)
+// 4. Example program
+// # Compute the x'th fibonacci number recursively.
+// def fib(x) {
+//   if (x < 3) {
+//     1
+//   }
+//   else {
+//     fib(x-1)+fib(x-2)
+//   }
+// }
+
+// # This expression will compute the 40th number.
+// fib(40)
 
 #[cfg(test)]
 mod tests {
@@ -172,10 +259,8 @@ mod tests {
 
   #[test]
   fn lex_unrecognized_char() {
-    let source: String = "( + )?".to_string(); // To-do, replace with numbers
+    let source: String = "5 + 5?".to_string(); // To-do, replace with numbers
     let result = lex(&source);
     assert_eq!(result.is_ok(), false);
   }
-
-
 }

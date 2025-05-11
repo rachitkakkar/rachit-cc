@@ -27,9 +27,9 @@ And here are all the supported keywords in SIL:
 - Handwritten table/switch driven lexer (also known as a *scanner* or *tokenizer*) ✅
 - Handwritten Recursive Descent parser
 - Code generation to ARM assembly
-- Language support for floating point numbers, basic arithmetic operators, mutable variables, function definitions and calls, conditionals, and while loops.
+- Language support for floating point numbers, basic arithmetic operators, mutable variables, function definitions and calls, conditionals, and while loops
 - Optimizations like trivial constant folding (to-do: flesh out all optimizations)
-- 100% unit test coverage (with GitHub continuous integration) ✅
+- 100% unit test coverage (with GitHub continuous integration to test/build the Rust project on commit) ✅
 
 ## Low-Priority Future Improvements
 - Support for more data types other than floating points (like booleans, integers, and strings)
@@ -39,3 +39,5 @@ And here are all the supported keywords in SIL:
 The syntax is loosely inspired by the Decaf language reference used in CS 432 and CS 630 at James Madison University.
 
 "Crafting Interpreters" by Robert Nystrom https://craftinginterpreters.com/
+
+To do: add llvm kalidescope
