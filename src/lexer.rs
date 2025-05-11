@@ -8,9 +8,6 @@ pub enum TokenType {
   Return(String),
   Break(String),
   Continue(String),
-  Int(String),
-  Bool(String),
-  Void(String),
   True(String),
   False(String),
 
@@ -80,7 +77,7 @@ pub fn lex(input: &String) -> Result<Vec<Token>, String>  {
       ',' => tokens.push(Token::new(TokenType::Comma(','), line_num, position)),
       ';' => tokens.push(Token::new(TokenType::Semicolon(';'), line_num, position)),
 
-      // Handle two-character operators z
+      // Handle two-character operators
       '=' => {
         if let Some(next_ch) = it.peek() {
           match next_ch {

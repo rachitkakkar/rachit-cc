@@ -1,6 +1,6 @@
 use std::{env, fs};
 
-use rachit_cc::lexer::{lex, TokenType};
+use rachit_cc::lexer::lex;
 
 fn compile(file_path: &String) -> Result<(), String> {
   match fs::read_to_string(file_path) {
