@@ -1,12 +1,17 @@
 use std::{env, fs};
 
-use rachit_cc::lexer::lex;
+use rachit_cc::{
+  lexer::lex, 
+  parser::Parser,
+};
 
 fn compile(file_path: &String) -> Result<(), String> {
   match fs::read_to_string(file_path) {
     Err(msg) => return Err(msg.to_string()),
     Ok(contents) => {
-      lex(&contents); // To-do, handle unused `Result`
+      let tokens = lex(&contents)?;
+      let parser = Parser { tokens };
+      parser.parse()?;
       return Ok(())
     }
   }

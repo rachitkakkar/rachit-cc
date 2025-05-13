@@ -21,18 +21,19 @@ fib(40)
 
 And here are all the supported keywords in SIL:
 
-```def if else while return break continue int bool void true```
+```def let if else while return break continue true false```
 
 ## Planned Features
-- Handwritten table/switch driven lexer (also known as a *scanner* or *tokenizer*) ✅
-- Handwritten Recursive Descent parser
-- Code generation to ARM assembly
-- Language support for floating point numbers, basic arithmetic operators, mutable variables, function definitions and calls, conditionals, and while loops
-- Optimizations like trivial constant folding (to-do: flesh out all optimizations)
-- 100% unit test coverage (with GitHub continuous integration to test/build the Rust project on commit) ✅
++ Handwritten table/switch driven lexer (also known as a *scanner* or *tokenizer*) ✅
++ Handwritten Recursive Descent parser
++ Code generation to ARM assembly
++ Language support for floating point numbers and booleans, basic arithmetic operators, mutable variables, function definitions and calls, conditionals, and while loops
+  + A boolean is just a floating point -> `1.0` for true and `0.0` for false
++ Optimizations like trivial constant folding (to-do: flesh out all optimizations)
++ 100% unit test coverage (with GitHub continuous integration to test/build the Rust project on commit) ✅
 
 ## Low-Priority Future Improvements
-- Support for more data types other than floating points (like booleans, integers, and strings)
+- Support for more data types other than floating points (like integers, strings, and arrays)
 - A backend for LLVM / interfacing with the LLVM API to generate optimized IR
 
 ## Sources
@@ -40,4 +41,4 @@ The syntax is loosely inspired by the Decaf language reference used in CS 432 an
 
 "Crafting Interpreters" by Robert Nystrom https://craftinginterpreters.com/
 
-To do: add llvm kalidescope
+"Kaleidoscope: Implementing a Language with LLVM" https://llvm.org/docs/tutorial/MyFirstLanguageFrontend/index.html
